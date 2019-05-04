@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<style>
+
+.text_style{
+	max-height: 100px;
+	min-height: 100px; 
+	resize: none; 
+	display: block; 
+	vertical-align: middle;
+	margin-top: 20px;
+	border-width: thick;
+}
+
+</style>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+        </script>
+</head>
+
+<body style="white-space: nowrap;">
+	<div>
+		<p>
+			To begin, click the room where you would like the robot to go first. The robot will show you the path it would like to take toward that room.<br><br>
+			After the robot shows you the path, click yes or no to answer the question "Does the robot's path make sense to you?"<br><br>
+			Once you click yes or no, the robot will follow the path it showed you.<br><br>
+			Once the robot has reached the room, and the person has disappeared, click another room to go to there. The process will repeat until all rooms have been attended to.<br><br>
+			The amount of times you click yes and no, the time it takes to click yes or no, and the time it takes to complete the game will be collected in a database.<br><br>
+			NO OTHER INFORMATION WILL BE COLLECTED FROM YOU AND YOU WILL REMAIN ANONYMOUS.<br><br>
+			This study (ASU IRB Numbers STUDY0008509 and STUDY00006825) has been approved for human participants by the Arizona State University Institutional Review Board.<br><br>
+			Click next to play a sample game.<br>
+		</p>
+   </div>
+   <div>
+	<button type="button" style="display:block;padding:20px;height:75px; margin:auto">Next</button>
+    <script type='text/javascript'>
+        $('button').click(_ => window.location.href = '/tutorial7'); //For offline use switch to 'tutorial7.html'
+    </script>
+	</div>
+
+</body>
+
+</html>

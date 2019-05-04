@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<style>
+
+.text_style{
+	max-height: 100px;
+	min-height: 100px; 
+	resize: none; 
+	display: block; 
+	vertical-align: middle;
+	margin-top: 20px;
+	border-width: thick;
+}
+
+</style>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+        </script>
+</head>
+
+<body style="white-space: nowrap;">
+	<div>
+		<p>
+			The rooms that need attention (medical or otherwise) by the green and white blocks with people in them.<br>
+		</p>
+   </div>
+   <div style="display:inline-block; vertical-align:top;">
+		<img src = "MapWithRooms.JPG" alt = "HTML5 Icon" id = "MapWithRooms" style ="width:944px;height:524px; visibility:visible display:inline;">
+    </div>
+   <div>
+	<button type="button" style="display:block;padding:20px;height:75px; margin:auto">Next</button>
+    <script type='text/javascript'>
+        $('button').click(_ => window.location.href = '/tutorial4'); //For offline use switch to 'tutorial4.html'
+    </script>
+	</div>
+</body>
+</html>

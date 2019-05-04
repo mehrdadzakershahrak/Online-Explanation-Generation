@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+<style>
+
+.text_style{
+	max-height: 100px;
+	min-height: 100px; 
+	resize: none; 
+	display: block; 
+	vertical-align: middle;
+	margin-top: 20px;
+	border-width: thick;
+}
+
+</style>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+        </script>
+</head>
+
+<body style="white-space: nowrap;">
+	<div>
+		<p>
+			The robot however can see much greater detail since it is in the field. The building has been affected by the disaster and the layout has changed beyond what you can see.<br><br>
+			The robot will inform you of any changes as you play in the box to the right of the map.<br>
+		</p>
+   </div>
+   <div style="display:inline-block; vertical-align:top;">
+		<img src = "MapWithTextBox.JPG" alt = "HTML5 Icon" id = "MapWithTextBox" style ="width:940px;height:519px; visibility:visible display:inline;">
+    </div>
+   <div>
+	<button type="button" style="display:block;padding:20px;height:75px; margin:auto">Next</button>
+    <script type='text/javascript'>
+        $('button').click(_ => window.location.href = '/tutorial6'); //For offline use switch to 'tutorial6.html'
+    </script>
+	</div>
+</body>
+</html>

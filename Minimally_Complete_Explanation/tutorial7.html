@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+<style>
+.text_style{
+	max-height: 565px;
+	min-height: 565px; 
+	resize: none; 
+	display: block; 
+	vertical-align: middle;
+	margin-top: 20px;
+	border-style: none;
+	overflow-y: scroll;
+	font-size: 16px;
+}
+
+strong {
+	font-weight:bold;
+	font-size:18px;
+	}
+
+</style>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+        </script>
+</head>
+
+<body style="white-space: nowrap;">
+	<div>
+		<p>
+			Feel free to finish this sample game. When you are done, click begin game to start the trial.<br>
+		</p>
+   </div>
+   <div style="display:inline-block">
+    	<canvas id="game" width="700" height="700" style="display:inline;"></canvas>
+   </div>
+   <div style="display:inline-block; vertical-align:top; border-style:solid; border-width:thick;">
+    	<textarea id="robo_com" cols="50" rows="10" class="text_style" readonly="true"></textarea>
+	</div>
+   <div>
+        <label>
+            <strong>Did you expect this move from the robot?</strong>
+        </label>
+        <button id='true' class='confirmationButton' disabled>Yes</button>
+        <button id='false' class='confirmationButton' disabled>No</button>
+    </div>
+   <div>
+	<button id = 'nextButton' type="button" style="display:block;padding:20px;height:75px; margin:auto">Begin Game</button>
+    <script type="text/javascript">
+    document.getElementById("nextButton").onclick = function () {
+        location.href = '/game';}; //For offline use switch to 'game1_train.html'
+	</script>
+	</div>
+    <script type="text/javascript" src = "tutorialgame.js"></script>
+</body>
+
+</html>

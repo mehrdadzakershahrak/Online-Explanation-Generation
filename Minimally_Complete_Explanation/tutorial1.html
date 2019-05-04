@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+<style>
+
+.text_style{
+	max-height: 100px;
+	min-height: 100px; 
+	resize: none; 
+	display: block; 
+	vertical-align: middle;
+	margin-top: 20px;
+	border-width: thick;
+}
+
+</style>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+        </script>
+</head>
+
+<body style="white-space: nowrap;">
+	<div>
+		<p>
+			Welcome. By playing this game you are helping to conduct exciting research into human-robot collaboration and communication. Thank you for your time and help.<br><br>
+			The scenario is simple. You are one half of a human-robot search and rescue team deployed to a disaster area. You are in the command center while the robot is in the field.<br><br>
+			On the screen you can see the floor plan of the building the robot is in as well as some furniture in each room.<br>
+		</p>
+   </div>
+   <div style="display:inline-block; vertical-align:top;">
+		<img src = "BlankMap.JPG" alt = "HTML5 Icon" id = "BlankMap" style ="width:943px;height:514px; visibility:visible display:inline;">
+    </div>
+   <div>
+	<button type="button" style="display:block;padding:20px;height:75px; margin:auto">Next</button>
+    <script type='text/javascript'>
+        $('button').click(_ => window.location.href = '/tutorial2'); //For offline use switch to 'tutorial2.html'
+    </script>
+	</div>
+</body>
+</html>
