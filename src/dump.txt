@@ -1,0 +1,308 @@
+//class ActionPredicate {
+//	public String action;
+//	public String predicate;
+//
+//	public ActionPredicate(String action, String predicate) {
+//		this.action = action;
+//		this.predicate = predicate;
+//	}
+//}
+//
+//
+//class Change {
+//	public String action;
+//	public String predicate;
+//	public Role role;
+//
+//	public Change(String action, String predicate, Role role) {
+//		this.action = action;
+//		this.predicate = predicate;
+//		this.role = role;
+//	}
+//}
+//
+// HashMap<String, ActionRoles> diff
+// diff.get(predicate).get(action) => HashSet<Role>
+
+//		}
+//		while (!planR.equals(planH)) {
+//			for (ArrayList<String> candidate : candidates) {
+//				for (String predicate : candidate) {
+//					modifyMH(predicate, diff, domainH);
+//					planH = callFD(domainH, problem);
+//					if (actionDiff < planDiff(planR, planH) && candidate.size() < minSize) {
+//						minSize = candidate.size();
+//						System.out.println("found a candidate!");
+//						// add explanations
+//						bestSolution.addAll(candidate);
+//						// remove those added explanations from the total list of explanations
+//						candidates.removeAll(candidate);
+//						// add the rest of the plan
+//						bestSolution.addAll(planPrefix(planR, actionDiff, planDiff(planR, planH)));
+//						// update the plan difference
+//						actionDiff = planDiff(planR, planH);
+//					}
+//				}
+//			}
+//		}
+//		Predicates robotPrime = new Predicates(domainR);
+//		diffRPrime = human.predicateDiff(robotPrime);
+//		ArrayList<String> robotPrimePredicates = new ArrayList<>(diffRPrime.keySet());
+//		System.out.println("the size of the best solution is: " + bestSolution.size());
+//		// use the remaining predicates to change the MH
+//		robotPrimePredicates.removeAll(bestSolution);
+//		return robotPrimePredicates;
+
+
+//	void modifyMH(ArrayList<String> candidate, HashMap<String, ActionRoles> diff, String domainHu) {
+//		for (String predicate : candidate) {
+//			ActionRoles candidates = diff.get(predicate);
+//			Random rand = new Random();
+//			String randomAction = candidates.chooseRandomAction(rand);
+//			if (randomAction.compareTo("done") == 0) return;
+//
+//			try {
+//				BufferedReader reader = new BufferedReader(new FileReader(domainHu));
+//				BufferedWriter writer = new BufferedWriter(new FileWriter(domainHu + ".out"));
+//				String line = null;
+//				boolean modifyPermission = false;
+//				HashSet<Role> roles = null;
+//				while ((line = reader.readLine()) != null) {
+//					if (line.contains(randomAction)) {
+//						roles = diff.get(predicate).get(randomAction);
+//						modifyPermission = true;
+//					}
+//					if (roles != null && modifyPermission) {
+//						if (line.contains(":precondition") && roles.contains(Role.PRECONDITION)) {
+//							line += " " + predicate;
+//							candidates.delete(randomAction, Role.PRECONDITION);
+//	//						roles.remove(Role.PRECONDITION);
+//							modifyPermission = false;
+//						}
+//						if (line.contains(":effect") && roles.contains(Role.ADD_EFFECT)) {
+//							line += " " + predicate;
+//							candidates.delete(randomAction, Role.PRECONDITION);
+//	//						roles.remove(Role.ADD_EFFECT);
+//							modifyPermission = false;
+//						}
+//						if (line.contains(":effect") && roles.contains(Role.DELETE_EFFECT)) {
+//							line += " " + predicate;
+//							candidates.delete(randomAction, Role.PRECONDITION);
+//	//						roles.remove(Role.DELETE_EFFECT);
+//							modifyPermission = false;
+//						}
+//					}
+//					writer.write(line);
+//					writer.newLine();
+//				}
+//				writer.close();
+//				reader.close();
+//				// Once everything is complete, delete old MH file
+//			      File oldFile = new File(domainHu);
+//			      oldFile.delete();
+//				// rename domainHu + ".out" -> domainHu
+//			      File newFile = new File(domainHu + ".out");
+//			      newFile.renameTo(oldFile);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+
+
+//	HashMap<String, ActionRoles> BFS(String predicate, HashMap<String, ActionRoles> diff) {
+//		HashMap<String, ActionRoles> path = new HashMap<>();
+//		ArrayList<Change> changes = new ArrayList<>();
+//		//changes.add(new Change(predicate,))
+//
+//		List<String> actions = diff.get(predicate).getActions();
+//		Deque<ActionPredicate> queue = new LinkedList<>();
+//		HashSet<ActionPredicate> visited = new HashSet<>();
+//		ActionPredicate source = new ActionPredicate(actions.get(0), predicate);
+//		visited.add(source);
+//		queue.addLast(source);
+//		while (!queue.isEmpty()) {
+//			//path
+//		}
+//		return path;
+//	}
+
+
+//	ArrayList<String> findAdj(String value,
+//			HashMap<String, ArrayList<String>> pre,
+//			 HashMap<String, ArrayList<String>> add,
+//			 HashMap<String, ArrayList<String>> del) {
+//		// returns all of the actions that has the "value" predicate in them
+//		ArrayList<String> result = new ArrayList<String>();
+//		for (String s : pre.keySet()) {
+//			if (pre.get(s).contains(value)) {
+//				result.add(s);
+//			}
+//		}
+//		for (String s : add.keySet()) {
+//			if (add.get(s).contains(value) && !result.contains(s)) {
+//				result.add(s);
+//			}
+//		}
+//		for (String s : del.keySet()) {
+//			if (del.get(s).contains(value) && !result.contains(s)) {
+//				result.add(s);
+//			}
+//		}
+//		return result;
+//	}
+
+
+
+//	String adjustMR(String action, HashMap<String, ActionRoles> diff, String domainRo) {
+//		// returns the list of predicates that has been modified in MR
+//		String predicate = new String();
+//		String domainRPrime = "/Users/mehrdad/Dropbox (ASU)/workspace/Publish/Online Explanations/rovers/domainRPrime.pddl";
+//
+//		try {
+//			BufferedReader reader = new BufferedReader(new FileReader(domainRo));
+//			BufferedWriter writer = new BufferedWriter(new FileWriter(domainRPrime));
+//			String line = null;
+//			boolean inject = false;
+//			while ((line = reader.readLine()) != null) {
+//				if (line.contains(action)) {
+//					String key = line.split(" ")[1];
+//					// find the action that its predicates need to be altered
+//					if (pre.get(key) != null || add.get(key) != null || del.get(key) != null) {
+//						inject = true;
+//					} else {
+//						inject = false;
+//					  }
+//				}
+//				if (inject) {
+//					String key = line.split(" ")[1];
+//					// find where we are in the action
+//					if (line.contains(":precondition")) {
+//						inPre = true;
+//						inEff = false;
+//					} else if (line.contains(":effect")) {
+//						inPre = false;
+//						inEff = true;
+//					} else if (line.contains(":parameters")) {
+//						inPre = false;
+//						inEff = false;
+//					}
+//					if (inPre && pre.get(key) != null && locate == 0) {
+//						// remove one precondition randomly from the list of differences
+//						Random rand = new Random();
+//						predicate = pre.get(key).remove(rand.nextInt(pre.get(key).size()));
+//						// modify the robot's precondition list
+//						line += " " + predicate;
+//						// one change has been made, time to stop
+//						inject = false;
+//					}
+//					else if (inEff & inject) {
+//						if (add.get(key) != null && locate == 1) {
+//							// remove one effect randomly from the list of differences
+//							Random rand = new Random();
+//							predicate = add.get(key).remove(rand.nextInt(add.get(key).size()));
+//							// modify the robot's effect list
+//							line += " " + predicate;
+//							// one change has been made, time to stop
+//							inject = false;
+//						}
+//						else if (del.get(key) != null && locate == 2) {
+//							// remove one effect randomly from the list of differences
+//							Random rand = new Random();
+//							predicate = del.get(key).remove(rand.nextInt(del.get(key).size()));
+//							// modify the robot's effect list
+//							line += " " + predicate;
+//							// one change has been made, time to stop
+//							inject = false;
+//						}
+//					}
+//				}
+//				writer.write(line);
+//				writer.newLine();
+//			}
+//			reader.close();
+//			writer.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return predicate;
+//	}
+
+
+    //System.out.println("Best solution is: ");
+    // needs fixing, I need to show the plan and predicates, not vice versa
+//		for (String p : best) {
+//			System.out.println("Predicate: " + p);
+//			for (String action : oeg.diffRPrime.get(p).getActions()) {
+//				System.out.println("Action: " + action);
+//			}
+//		}
+
+
+//		for (String predicate : predicateList) {
+//			ActionRoles candidateActions = diff.get(predicate);
+//			for (String action : candidateActions.getActions()) {
+//				if (rand.nextDouble() < missingProb) {
+//					candidateActions.actionDelete(action);
+//				}
+//			}
+//		}
+public void findLongestMonotonic(String problem) throws IOException {
+		
+		ArrayList<String> planR = callFD(domainR, problem);
+		ArrayList<String> planH = callFD(domainH, problem);
+		int orgActionDiff = planDiff(planR, planH);
+		ArrayList<String> predicates = new ArrayList<>(diff.keySet());
+		// OPTIMIZE (might not need to check all the subsets or sort them?)
+		candidates = new ArrayList<>();
+		int arr[] = new int[diff.keySet().size()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = i;
+		}
+		for (int r = 1; r <= arr.length; r++) {
+			printCombination(arr, arr.length,r);
+			System.out.println(candidates.size());
+		}
+		
+		//ArrayList<ArrayList<String>> candidates = allSubsets(predicates);
+		ArrayList<ArrayList<String>> bestSolution = new ArrayList<>();
+
+		// OEG
+		domainInit();
+		while (!planR.equals(planH)) {
+			domainInitNoCpy();
+			predicates = new ArrayList<>(diff.keySet());
+			candidates = allSubsets(predicates);
+			ArrayList<ArrayList<String>> tmpSol = new ArrayList<>();
+			for (ArrayList<String> candidate : candidates) {
+				if (candidate.size() == 0) continue;
+				copyFileUsingJava7Files(domainH, domainHTmp);
+				modifyMH(candidate, diff, domainH);
+				if (orgActionDiff < planDiff(planR, callFD(domainH, problem))) {
+					// find the smallest subset of all differences between MH and MR such that
+					// the first difference between human and robot's plan moves further (moves orgActionDiff)
+					// OPTIMIZE find the subset that makes the orgActionDiff closer to goal without caring about its size
+					tmpSol.add(candidate);
+				}
+				copyFileUsingJava7Files(domainHTmp, domainH);
+			}
+			int minSize = Integer.MAX_VALUE;
+			int idxSmallest = -1;
+			for (int i = 0; i < tmpSol.size(); i++) {
+				if (tmpSol.get(i).size() < minSize) {
+					minSize = tmpSol.get(i).size();
+					idxSmallest = i;
+				}
+			}
+			modifyMH(tmpSol.get(idxSmallest), diff, domainH);
+			planH = callFD(domainH, problem);
+			bestSolution.add(tmpSol.get(idxSmallest));
+			orgActionDiff = planDiff(planR, planH);
+		}
+		//System.out.println("\n\n" + bestSolution.get(bestSolution.size()-1) + "\n\n");
+		System.out.println("\n\n the size is: " + bestSolution.size());
+		System.out.println("\n\n plan R is equal to planH: " + planR.equals(planH));
+		for (ArrayList<String> element : bestSolution) {
+			System.out.println(element);
+		}
+	}

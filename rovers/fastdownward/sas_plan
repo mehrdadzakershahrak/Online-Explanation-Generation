@@ -1,0 +1,7 @@
+(move rover1 waypoint1 waypoint4)
+(take-tool rover1 tool1 waypoint4)
+(remove-obstacle rover1 obstacle2 waypoint4 waypoint5 tool1)
+(move rover1 waypoint4 waypoint5)
+(move rover1 waypoint5 waypoint6)
+(visit-room rover1 room1 waypoint6)
+; cost = 6 (unit cost)

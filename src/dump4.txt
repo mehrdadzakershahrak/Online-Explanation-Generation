@@ -1,0 +1,39 @@
+private ArrayList<ArrayList<String>> findLongestMonotonicHelper(ArrayList<ArrayList<String>> visited, HashMap<String, ActionRoles> difference,
+																			                                           ArrayList<ArrayList<String>> bestSolution, int ActionDiff,
+																			                                           String problem, ArrayList<String> planR) throws IOException {
+		ArrayList<ArrayList<String>> visitedPlusBest = new ArrayList<>();
+		visitedPlusBest.addAll(bestSolution);
+		visitedPlusBest.addAll(visited);
+		ArrayList<String> combined = new ArrayList<>();
+		for (ArrayList<String> element: visitedPlusBest) {
+			for (String e : element) {
+				combined.add(e);
+			}
+		}
+		ArrayList<String> remaining = new ArrayList<>(difference.keySet());
+		remaining.removeAll(combined);
+
+		if(callFD(domainH, problem).equals(planR)) {
+			System.out.println("found it!!!");
+			return bestSolution;
+		}
+		int arr[] = new int[remaining.size()];
+		ArrayList<ArrayList<String>> candidates = initCandidates(arr, remaining);
+		System.out.println("candidate size: " + candidates.size());
+		ArrayList<String> modelH = readOriginial(domainHOrig);
+		modelH = modifyOriginal(bestSolution);
+		writeFile(domainH, modelH);
+		int count = 0;
+		for (ArrayList<String> candidate : candidates) {
+			System.out.println("count is: " + count++);
+			if (modifyMHList(candidate, difference, domainH, problem, planR, modelH, ActionDiff)) {
+				bestSolution.add(candidate);
+				System.out.println("one step ahead!! actionDiff is: "+ planDiff(planR, callFD(domainH, problem)));
+				return findLongestMonotonicHelper(visited, difference, bestSolution, planDiff(planR, callFD(domainH, problem)), problem, planR);
+			}
+		}
+		visited.add(bestSolution.get(bestSolution.size()-1));
+		System.out.println("here at wall!, visit size is: " + visited.size());
+		bestSolution.remove(bestSolution.size()-1);
+		return findLongestMonotonicHelper(visited, difference, bestSolution, planDiff(planR, callFD(domainH, problem)), problem, planR);
+	}

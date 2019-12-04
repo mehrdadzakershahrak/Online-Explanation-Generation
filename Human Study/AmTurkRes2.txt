@@ -1,0 +1,15 @@
+[take_image rover0 waypoint0 objective1 camera0 low_res memory0 (1), communicate_image_data rover0 general objective1 low_res waypoint0 waypoint1 memory0 (1), sample_rock rover0 rover0store waypoint0 (1), drop rover0 rover0store (1), communicate_rock_data rover0 general waypoint0 waypoint0 waypoint1 (1), sample_soil rover0 rover0store waypoint0 (1), communicate_soil_data rover0 general waypoint0 waypoint0 waypoint1 (1)]
+count is: 0
+count is: 1
+count is: 2
+count is: 3
+[calibrate rover0 camera0 objective0 waypoint0 (1), take_image rover0 waypoint0 objective1 camera0 low_res memory0 (1), communicate_image_data rover0 general objective1 low_res waypoint0 waypoint1 memory0 (1), sample_rock rover0 rover0store waypoint0 (1), drop rover0 rover0store (1), communicate_rock_data rover0 general waypoint0 waypoint0 waypoint1 (1), sample_soil rover0 rover0store waypoint0 (1), communicate_soil_data rover0 general waypoint0 waypoint0 waypoint1 (1)]
+count is: 0
+[calibrate rover0 camera0 objective0 waypoint0 (1), take_image rover0 waypoint0 objective1 camera0 low_res memory0 (1), communicate_image_data rover0 general objective1 low_res waypoint0 waypoint1 memory0 (1), sample_rock rover0 rover0store waypoint0 (1), drop rover0 rover0store (1), communicate_rock_data rover0 general waypoint0 waypoint0 waypoint1 (1), sample_soil rover0 rover0store waypoint0 (1), communicate_soil_data rover0 general waypoint0 waypoint0 waypoint1 (1)]
+count is: 0
+count is: 1
+[calibrate rover0 camera0 objective0 waypoint0 (1), take_image rover0 waypoint0 objective1 camera0 low_res memory0 (1), communicate_image_data rover0 general objective1 low_res waypoint0 waypoint1 memory0 (1), sample_rock rover0 rover0store waypoint0 (1), communicate_rock_data rover0 general waypoint0 waypoint0 waypoint1 (1), drop rover0 rover0store (1), sample_soil rover0 rover0store waypoint0 (1), communicate_soil_data rover0 general waypoint0 waypoint0 waypoint1 (1)]
+found it!!!
+calibrate rover0 camera0 objective0 waypoint0 (1) [PRECONDITION] ## (calibrated ?i ?r) ## take_image rover0 waypoint0 objective1 camera0 low_res memory0 (1) take_image rover0 waypoint0 objective1 camera0 low_res memory0 (1) [DELETE_EFFECT] ## (not (channel_free ?l)) ## communicate_image_data rover0 general objective1 low_res waypoint0 waypoint1 memory0 (1) communicate_image_data rover0 general objective1 low_res waypoint0 waypoint1 memory0 (1) sample_rock rover0 rover0store waypoint0 (1) communicate_rock_data rover0 general waypoint0 waypoint0 waypoint1 (1) [PRECONDITION] ## (full ?y) ## drop rover0 rover0store (1) drop rover0 rover0store (1) sample_soil rover0 rover0store waypoint0 (1) communicate_soil_data rover0 general waypoint0 waypoint0 waypoint1 (1) 
+COMPLETE
+[(full ?y), (calibrated ?i ?r)]

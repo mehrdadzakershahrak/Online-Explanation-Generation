@@ -1,0 +1,172 @@
+public void findLongestMonotonic(String problem) throws IOException {
+
+		ArrayList<String> planR = callFD(domainR, problem);
+		ArrayList<String> planH = callFD(domainH, problem);
+		int orgActionDiff = planDiff(planR, planH);
+//		ArrayList<String> predicates = new ArrayList<>(diff.keySet());
+		candidates = new ArrayList<>();
+		int arr[] = new int[diff.keySet().size()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = i;
+		}
+		for (int r = 1; r <= arr.length; r++) {
+			printCombination(arr, arr.length,r);
+		}
+
+		ArrayList<ArrayList<String>> bestSolution = new ArrayList<>();
+		HashMap<Integer, ArrayList<String>> modifications = new HashMap<>();
+		// OEG
+		domainInit();
+		int count = 0;
+		while (!planR.equals(planH)) {
+
+			domainInitNoCpy();
+			candidates = new ArrayList<>();
+			arr = new int[diff.keySet().size()];
+			initCandidates(arr);
+			System.out.println("diff size is = " + arr.length);
+			count = 0;
+			ArrayList<String> modelH = readOriginial(domainH);
+			modifications.put((bestSolution.size()), modelH);
+			boolean foundSolution = false;
+			for (ArrayList<String> candidate : candidates) {
+				System.out.println("count is: " + count++);
+				if (orgActionDiff < modifyMHList(candidate, diff, domainH, problem, planR, modelH)) {
+					// OPTIMIZE find the subset that makes the orgActionDiff closer to goal without caring about its size
+					planH = callFD(domainH, problem);
+					bestSolution.add(candidate);
+					modifications.put(bestSolution.size(), modelH);
+					orgActionDiff = planDiff(planR, planH);
+					System.out.println("one Step ahead!");
+					foundSolution = true;
+					break;
+				}
+				else {
+					modelH = modifications.get(bestSolution.size());
+				}
+			}
+			if (!foundSolution && !bestSolution.isEmpty()) {
+				ArrayList<String> toRemove = bestSolution.get(bestSolution.size()-1);
+				bestSolution.remove(bestSolution.size()-1);
+				candidates.remove(toRemove);
+			}
+		}
+		//System.out.println("\n\n" + bestSolution.get(bestSolution.size()-1) + "\n\n");
+		System.out.println("\n\n the size is: " + bestSolution.size());
+		System.out.println("\n\n plan R is equal to planH: " + planR.equals(planH));
+		for (ArrayList<String> element : bestSolution) {
+			System.out.println(element);
+		}
+	}
+
+    //	public void findLongestMonotonic(String problem) throws IOException {
+//
+//		ArrayList<String> planR = callFD(domainR, problem);
+//		ArrayList<String> planH = callFD(domainH, problem);
+//		int orgActionDiff = planDiff(planR, planH);
+////		ArrayList<String> predicates = new ArrayList<>(diff.keySet());
+//		candidates = new ArrayList<>();
+//		int arr[] = new int[diff.keySet().size()];
+//		for (int i = 0; i < arr.length; i++) {
+//			arr[i] = i;
+//		}
+//		for (int r = 1; r <= arr.length; r++) {
+//			printCombination(arr, arr.length,r);
+//		}
+//
+//		ArrayList<ArrayList<String>> bestSolution = new ArrayList<>();
+//		HashMap<Integer, ArrayList<String>> modifications = new HashMap<>();
+//		// OEG
+//		domainInit();
+//		int count = 0;
+//		while (!planR.equals(planH)) {
+//
+//			domainInitNoCpy();
+//			candidates = new ArrayList<>();
+//			arr = new int[diff.keySet().size()];
+//			initCandidates(arr);
+//			System.out.println("diff size is = " + arr.length);
+//			count = 0;
+//			ArrayList<String> modelH = readOriginial(domainH);
+//			modifications.put((bestSolution.size()), modelH);
+//			boolean foundSolution = false;
+//			for (ArrayList<String> candidate : candidates) {
+//				System.out.println("count is: " + count++);
+//				if (orgActionDiff < modifyMHList(candidate, diff, domainH, problem, planR, modelH)) {
+//					// OPTIMIZE find the subset that makes the orgActionDiff closer to goal without caring about its size
+//					planH = callFD(domainH, problem);
+//					bestSolution.add(candidate);
+//					modifications.put(bestSolution.size(), modelH);
+//					orgActionDiff = planDiff(planR, planH);
+//					System.out.println("one Step ahead!");
+//					foundSolution = true;
+//					break;
+//				}
+//				else {
+//					modelH = modifications.get(bestSolution.size());
+//				}
+//			}
+//			if (!foundSolution && !bestSolution.isEmpty()) {
+//				ArrayList<String> toRemove = bestSolution.get(bestSolution.size()-1);
+//				bestSolution.remove(bestSolution.size()-1);
+//				candidates.remove(toRemove);
+//			}
+//		}
+//		//System.out.println("\n\n" + bestSolution.get(bestSolution.size()-1) + "\n\n");
+//		System.out.println("\n\n the size is: " + bestSolution.size());
+//		System.out.println("\n\n plan R is equal to planH: " + planR.equals(planH));
+//		for (ArrayList<String> element : bestSolution) {
+//			System.out.println(element);
+//		}
+//	}
+
+boolean findLongestHelper(int orgActionDiff, int[] arr, ArrayList<ArrayList<String>> bestSolution, 
+										  HashMap<Integer, ArrayList<String>> modifications, String problem,ArrayList<String> planR) throws IOException {
+		if (arr.length == 0) return true;
+		System.out.println("length is " + arr.length);
+		initCandidates(arr);
+		ArrayList<String> modelH = modifications.get(bestSolution.size());
+		int c = 0;
+		for (ArrayList<String> candidate : candidates) {
+			System.out.println("count: " + c++);
+			if (modifyMHList(candidate, diff, domainH, problem, planR, modelH, orgActionDiff)) {
+				System.out.println("diff decreasedd");
+				ArrayList<String> planH = callFD(domainH, problem);
+				bestSolution.add(candidate);
+				modifications.put(bestSolution.size(), modelH);
+				orgActionDiff = planDiff(planR, planH);
+				System.out.println("one Step ahead!");
+				Iterator<String> itr; 
+				int [] toRemove = new int [arr.length];
+				int size = 0;
+				for (String element : candidate) {
+					itr = diff.keySet().iterator();
+					String tmp = itr.next();
+					int idx = 0;
+					while (!element.equals(tmp)) {
+						tmp = itr.next();
+						idx++;
+					}
+					toRemove[size++] = idx;
+				}
+				int[] newArr = new int [arr.length - toRemove.length];
+				int counterToRemove = 0;
+				int counterNewArr = 0;
+				for (int i = 0; i < arr.length; i++) {
+					if (i == toRemove[counterToRemove]) {
+						counterToRemove++;
+						continue;
+					}
+					newArr[counterNewArr++] = i;
+				}
+				if (findLongestHelper(orgActionDiff, newArr, bestSolution, modifications, problem, planR)) {
+					return true;
+				} else {
+					bestSolution.remove(bestSolution.size()-1);
+					modelH = modifications.get(bestSolution.size());
+					System.out.println("step back");
+				}
+			}
+		}
+		return false;
+	}

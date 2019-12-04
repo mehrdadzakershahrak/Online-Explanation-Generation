@@ -1,0 +1,93 @@
+ArrayList<String> planPrefix(ArrayList<String> planR, int start, int end) {
+		// get the plan prefix from start (inclusive) to the end (exclusive)
+		ArrayList<String> solution = new ArrayList<>();
+		int i = start;
+		while (i < end) {
+			solution.add(planR.get(i));
+			i++;
+		}
+		return solution;
+	}
+
+	void modifyMH(ArrayList<String> candidate, HashMap<String, ActionRoles> diff, String domainHu) {
+
+		for (String predicate : candidate) {
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(domainHu));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(domainHu + ".out"));
+				String line = null;
+				ActionRoles change = diff.get(predicate);
+			    String action = change.getActions().get(0);
+				boolean modifyPermission = true;
+				HashSet<Role> roles = null;
+
+				while (modifyPermission) {
+					line = reader.readLine();
+					if (line.contains(action)) {
+						roles = change.get(action);
+						writer.write(line);
+						writer.newLine();
+						line = reader.readLine();
+						writer.write(line);
+						writer.newLine();
+						line = reader.readLine();
+						if (line.contains(":precondition") && roles.contains(Role.PRECONDITION)) {
+							line += " " + predicate;
+							modifyPermission = false;
+						}
+						else {
+							writer.write(line);
+							writer.newLine();
+							line = reader.readLine();
+							writer.write(line);
+							writer.newLine();
+							line = reader.readLine();
+							if (line.contains(":effect") && roles.contains(Role.ADD_EFFECT)) {
+								line += " " + predicate;
+								modifyPermission = false;
+							}
+							if (line.contains(":effect") && roles.contains(Role.DELETE_EFFECT)) {
+								line += " " + predicate;
+								modifyPermission = false;
+							}
+						}
+
+						writer.write(line);
+						writer.newLine();
+					} else {
+						writer.write(line);
+						writer.newLine();
+					}
+				}
+			while((line = reader.readLine()) != null) {
+				writer.write(line);
+				writer.newLine();
+			}
+			writer.close();
+			reader.close();
+			// Once everything is complete, delete old MH file
+		      File oldFile = new File(domainHu);
+		      oldFile.delete();
+			// rename domainHu + ".out" -> domainHu
+		      File newFile = new File(domainHu + ".out");
+		      newFile.renameTo(oldFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+			}
+		}
+	}
+
+	ArrayList<ArrayList<String>> allSubsets(ArrayList<String> set) {
+			ArrayList<ArrayList<String>> all = new ArrayList<>();
+			int n = set.size();
+			for (int i = 0; i < (1<<n); i++) {
+				ArrayList<String> subset = new ArrayList<>();
+	            for (int j = 0; j < n; j++) {
+	            	if ((i & (1 << j)) > 0) {
+	            		subset.add(set.get(j));
+	            	}
+	            }
+	            all.add(subset);
+			}
+			return all;
+		}	
